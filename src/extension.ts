@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (ignoreEvent(context, e.uri)) return
 
             await commands.executeCommand('extension.csproj.add',
-                e.uri, true)
+                e.uri, !getSilentAddition())
         }),
 
         window.onDidChangeActiveTextEditor(async (e: vscode.TextEditor) => {
@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (ignoreEvent(context, e.document.uri)) return
 
             await commands.executeCommand('extension.csproj.add',
-                e.document.uri, true)
+                e.document.uri, !getSilentAddition())
         }),
 
         csprojWatcher.onDidChange(uri => {
@@ -80,6 +80,10 @@ function ignoreEvent(context: vscode.ExtensionContext, uri: vscode.Uri) {
     return false
 }
 
+function getSilentAddition() {
+    return getConfig().get('silentAddition', false)
+}
+
 function getConfig() {
     return workspace.getConfiguration("csproj")
 }
@@ -109,7 +113,7 @@ async function csprojCommand(
 
         if (CsprojUtil.hasFile(csproj, fsPath)) {
             StatusBar.displayItem(csproj.name, true)
-            if (!promptAction && !bulkMode) {
+            if (!getSilentAddition() && !promptAction && !bulkMode) {
                 window.showWarningMessage(`${fileName} is already in ${csproj.name}`)
             }
             console.log(`extension.csproj#trigger(${fileName}): already in csproj`)

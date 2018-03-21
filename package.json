@@ -74,6 +74,11 @@
           "default": null,
           "description": "A regular expression to exclude file paths by."
         },
+        "csproj.silentAddition": {
+          "type": "boolean",
+          "default": false,
+          "description": "Silently add items to csproj."
+        },
         "csproj.silentDeletion": {
           "type": "boolean",
           "default": false,

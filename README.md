@@ -44,6 +44,7 @@ This extension contributes the following settings:
 | `csproj.enable`         | Enable/disable this extension.
 | `csproj.csprojRegex`    | Regular expression to match the closest .csproj file by.
 | `csproj.itemType`       | Mapping from file extension to csproj XML element. Defaults to: <br/> `{ "*": "Content", ".ts": "TypeScriptCompile" }`
+| `csproj.silentAddition` | Silently add items to csproj. Default: `false`.
 | `csproj.silentDeletion` | Silently delete items from csproj when their corresponding files are removed. Default: `false`.
 | `csproj.includeRegex`   | Regular expression to match files you want to add to csproj.
 | `csproj.excludeRegex`   | Regular expression to exclude files you do not want to add to csproj.
@@ -62,11 +63,12 @@ a directory, `files.exclude`, your saved ignore list, `csproj.includeRegex` and 
 
 ## Release Notes
 
-### Most Recent Release (0.7.0)
+### Most Recent Release (0.7.1)
 
 Features:
 
-* Set `.cs` files to `Compile` by default ([#10](https://github.com/DerFlatulator/vscode-csproj/issues/10)).
+* Added `csproj.silentAddition` configuration setting.
+* Added `csproj.csprojRegex` configuration setting.
 
 ### See GitHub for [full release history](https://github.com/DerFlatulator/vscode-csproj/releases)
 
