@@ -2,8 +2,8 @@
   "name": "vscode-csproj",
   "displayName": "VS Code .csproj",
   "description": "Add/remove files from .csproj.",
-  "version": "0.7.0",
-  "publisher": "lucasazzola",
+  "version": "0.7.1",
+  "publisher": "mkylmamaa",
   "engines": {
     "vscode": "^1.5.0"
   },
@@ -38,6 +38,14 @@
           "type": "boolean",
           "default": true,
           "description": "Turn this extension on or off."
+        },
+        "csproj.csprojRegex": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": ".*\\.csproj$",
+          "description": "A regular expression to match the closest .csproj file by."
         },
         "csproj.itemType": {
           "type": [
@@ -112,8 +120,9 @@
   },
   "dependencies": {
     "@azz/elementtree": "^0.1.6",
+    "elementtree": "^0.1.7",
     "lodash.debounce": "^4.0.8",
-    "mz": "^2.4.0",
+    "mz": "^2.7.0",
     "strip-bom": "^3.0.0"
   }
 }

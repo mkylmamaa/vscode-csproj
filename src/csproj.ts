@@ -7,23 +7,25 @@ import {Csproj, XML} from './types'
 const etree = require('@azz/elementtree')
 const stripBom = require('strip-bom')
 
+const {workspace} = vscode
+
 export class NoCsprojError extends Error {}
 
 let _cacheXml: { [path: string]: XML } = Object.create(null)
 
-export async function getPath(fileDir: string, walkUp = true): Promise<string> {
+export async function getPath(fileDir: string, regExp: RegExp, walkUp = true): Promise<string> {
     if (!path.isAbsolute(fileDir))
         fileDir = path.resolve(fileDir)
 
     const files = await fs.readdir(fileDir)
-    const csproj = files.find(file => file.endsWith('.csproj'))
+    const csproj = files.find((file : string) => regExp.test(file))
     if (csproj)
         return path.resolve(fileDir, csproj)
     if (walkUp) {
         const parent = path.resolve(fileDir, '..')
         if (parent === fileDir)
             throw new NoCsprojError('Reached fs root, no csproj found')
-        return getPath(parent)
+        return getPath(parent, regExp)
     }
     throw new NoCsprojError(`No csproj found in current directory: ${fileDir}`)
 }
@@ -84,7 +86,8 @@ export async function persist(csproj: Csproj, indent = 2) {
 }
 
 export async function forFile(filePath: string): Promise<Csproj> {
-    const fsPath = await getPath(path.dirname(filePath))
+    const config = workspace.getConfiguration('csproj')
+    const fsPath = await getPath(path.dirname(filePath), new RegExp(config.get('csprojRegex', '.*\.csproj$')))
     const name = path.basename(fsPath)
     const xml = await load(fsPath)
     return { fsPath, name, xml }

@@ -42,6 +42,7 @@ This extension contributes the following settings:
 | **Setting Key**         | **Description**
 |-------------------------|-----------------
 | `csproj.enable`         | Enable/disable this extension.
+| `csproj.csprojRegex`    | Regular expression to match the closest .csproj file by.
 | `csproj.itemType`       | Mapping from file extension to csproj XML element. Defaults to: <br/> `{ "*": "Content", ".ts": "TypeScriptCompile" }`
 | `csproj.silentDeletion` | Silently delete items from csproj when their corresponding files are removed. Default: `false`.
 | `csproj.includeRegex`   | Regular expression to match files you want to add to csproj.
